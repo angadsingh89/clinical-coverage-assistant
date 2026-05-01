@@ -327,15 +327,41 @@ st.markdown("""
 @st.cache_data
 def load_data():
     app_dir = Path(__file__).resolve().parent
-    candidates = [
+    cwd = Path.cwd()
+    data_dir_candidates = [
         app_dir / "data",
         app_dir / "pa_copilot" / "data",
-        Path.cwd() / "data",
-        Path.cwd() / "pa_copilot" / "data",
+        app_dir / "clinical_coverage_assistant_desktop" / "data",
+        cwd / "data",
+        cwd / "pa_copilot" / "data",
+        cwd / "clinical_coverage_assistant_desktop" / "data",
     ]
-    data_dir = next((p for p in candidates if p.exists()), app_dir / "data")
-    cases_path = data_dir / "cases.json"
-    guidelines_path = data_dir / "guidelines.json"
+
+    cases_path = None
+    guidelines_path = None
+
+    for data_dir in data_dir_candidates:
+        candidate_cases = data_dir / "cases.json"
+        candidate_guidelines = data_dir / "guidelines.json"
+        if candidate_cases.exists() and candidate_guidelines.exists():
+            cases_path = candidate_cases
+            guidelines_path = candidate_guidelines
+            break
+
+    # Last-resort recursive search for flexible deployment layouts.
+    if cases_path is None or guidelines_path is None:
+        case_matches = list(app_dir.rglob("cases.json"))
+        guideline_matches = list(app_dir.rglob("guidelines.json"))
+        if case_matches and guideline_matches:
+            cases_path = case_matches[0]
+            guidelines_path = guideline_matches[0]
+
+    if cases_path is None or guidelines_path is None:
+        raise FileNotFoundError(
+            "Could not find data files. Ensure both data/cases.json and "
+            "data/guidelines.json are included in the deployed repository."
+        )
+
     with open(cases_path) as f:
         cases = json.load(f)
     with open(guidelines_path) as f:
