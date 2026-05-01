@@ -303,6 +303,30 @@ st.markdown("""
         font-size: 0.9rem;
         line-height: 1.4;
     }
+    .help-copy p {
+        margin: 0 0 0.95rem 0;
+        color: var(--ink);
+        font-size: 0.94rem;
+        line-height: 1.58;
+    }
+    .help-heading {
+        font-weight: 800;
+        font-size: 1.1rem;
+        margin: 0.6rem 0 0.8rem 0;
+        color: var(--ink);
+        text-transform: uppercase;
+        letter-spacing: 0.01em;
+    }
+    .agent-block {
+        margin: 0 0 1rem 0;
+    }
+    .help-footnote {
+        margin-top: 0.8rem;
+        font-size: 0.78rem;
+        color: #7a5a54;
+        font-style: italic;
+        line-height: 1.45;
+    }
     .mini-note {
         background: #fff;
         border: 2px solid var(--border);
@@ -633,26 +657,26 @@ with tab1:
         st.markdown(
             """
             <div class="note-box">
-                <h4>How This Tool Helps</h4>
-                <p><b>What “coverage” means:</b> Coverage means whether an insurance plan is likely to approve payment for a requested test, procedure, or treatment.</p>
-                <p><b>What this tool checks:</b> It reads the clinical note and compares documented evidence (symptoms, imaging, prior treatment, and functional impact) against policy criteria.</p>
-                <p><b>What you get:</b> A clear recommendation, the reason behind it, and the exact documentation gaps to fix before submission.</p>
-                <p><b>How to use:</b> Select a case, review the matched guideline, then click <b>Step 3: Run Analysis</b>.</p>
+                <div class="help-copy">
+                    <p>Every day, physicians across the country write detailed clinical notes explaining why their patients need a specific procedure or treatment. They document the diagnosis, the imaging results, the medications that were tried, the weeks of physical therapy that did not work. They make a careful, evidence-based case.</p>
+                    <p>Then they submit it to an insurance company and wait.</p>
+                    <p>On the other side, a utilization reviewer opens that note and runs through a checklist. They are looking for specific language, specific criteria, and specific proof points that match their payer policy. If the note says "the patient has back pain" but the policy requires documented radiculopathy confirmed by MRI with at least six weeks of failed conservative treatment, the request gets denied. The patient does not get their procedure. The physician's office spends another hour on the phone filing an appeal.</p>
+                    <p>This happens millions of times a year. Most denials are not because the patient does not qualify. They are because the documentation did not tell the story the right way.</p>
+                    <p>PA Copilot was built to close that gap. It reads your clinical note the same way a utilization reviewer does, checks it against the actual payer criteria for your requested procedure, and shows you exactly which criteria are met, which are missing, and what you need to add before you submit. You get a clear recommendation, the reasoning behind it, and a concrete action plan so your authorization goes through the first time without a denial, a phone call, or an appeal.</p>
+                    <div class="help-heading">HOW THIS TOOL HELPS</div>
+                    <p>You select a real clinical case and a procedure. PA Copilot then runs it through four AI agents, each doing a specific job.</p>
+                    <p class="agent-block">The first agent reads the clinical note and pulls out every relevant fact. The diagnosis, the treatments already tried, the imaging findings, the functional limitations the patient is experiencing. It also flags anything that is missing from the note that a reviewer would expect to see.</p>
+                    <p class="agent-block">The second agent takes those facts and checks them one by one against the actual payer criteria for that procedure. For each criterion, it tells you whether the note meets it, fails it, or simply does not have enough information to make the call.</p>
+                    <p class="agent-block">The third agent looks at the full picture and makes a determination. Approved, denied, or pending more information. It also gives you a confidence score and explains exactly why it reached that conclusion.</p>
+                    <p class="agent-block">The fourth agent is where the real value is. If anything is denied or uncertain, it tells you precisely what documentation to add, what language to use, and how to make the case stronger. If the situation calls for it, it will recommend requesting a peer to peer review with the insurance medical director and give you the exact talking points to use on that call.</p>
+                    <p>The entire process takes under a minute. What used to require a back and forth over days now happens before you ever hit submit.</p>
+                    <p class="help-footnote">Built by Anagad as a working prototype of the multi-agent prior authorization system described in the BioNLP 2024 research paper "Advancing Healthcare Automation: Multi-Agent System for Medical Necessity Justification."</p>
+                </div>
             </div>
             """,
             unsafe_allow_html=True
         )
 
-        st.markdown(
-            """
-            <div class="mini-note">
-                <p><b>Quick Start:</b> Choose a case, confirm the guideline, and run analysis.</p>
-                <p><b>Output includes:</b> Criteria status, recommendation confidence, and practical next steps.</p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-        
         results_container = st.container()
         
         if run_btn:
