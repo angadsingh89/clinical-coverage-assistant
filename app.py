@@ -594,7 +594,7 @@ tab1, tab2 = st.tabs(["Run Analysis", "Browse Cases"])
 # TAB 1: PA ANALYSIS
 # ══════════════════════════════════════════════════════════════════
 with tab1:
-    col_left, col_right = st.columns([1.05, 1.2], gap="medium")
+    col_right, col_left = st.columns([1.2, 1.05], gap="medium")
     
     with col_left:
         st.markdown("### Step 1: Select a Case")
