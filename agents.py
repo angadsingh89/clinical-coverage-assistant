@@ -1,17 +1,26 @@
-import anthropic
 import json
 import streamlit as st
+try:
+    import anthropic
+except Exception:
+    anthropic = None
 
 client = None
 
 
 def init_client(api_key: str):
     global client
+    if anthropic is None:
+        raise ImportError(
+            "anthropic package is not available. Use demo mode or add anthropic to requirements."
+        )
     client = anthropic.Anthropic(api_key=api_key)
 
 
 def run_agent(agent_name: str, system_prompt: str, user_message: str) -> str:
     """Run a single agent and return its output."""
+    if client is None:
+        raise RuntimeError("AI client is not initialized. Add API key or use demo mode.")
     response = client.messages.create(
         model="claude-sonnet-4-20250514",
         max_tokens=1000,
