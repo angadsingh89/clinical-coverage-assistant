@@ -513,7 +513,7 @@ if "history" not in st.session_state:
 if "api_key" not in st.session_state:
     st.session_state.api_key = ""
 if "demo_mode" not in st.session_state:
-    st.session_state.demo_mode = False
+    st.session_state.demo_mode = True
 
 # ─── SIDEBAR ─────────────────────────────────────────────────────────────────
 with st.sidebar:
@@ -594,7 +594,7 @@ tab1, tab2 = st.tabs(["Run Analysis", "Browse Cases"])
 # TAB 1: PA ANALYSIS
 # ══════════════════════════════════════════════════════════════════
 with tab1:
-    col_right, col_left = st.columns([1.2, 1.05], gap="medium")
+    col_left, col_right = st.columns([1.05, 1.2], gap="medium")
     
     with col_left:
         st.markdown("### Step 1: Select a Case")
@@ -681,9 +681,14 @@ with tab1:
         
         if run_btn:
             st.session_state.results = {}
-            if live_api_key:
-                init_client(live_api_key)
             demo_mode_active = st.session_state.demo_mode and not live_api_key
+            if live_api_key and not st.session_state.demo_mode:
+                try:
+                    init_client(live_api_key)
+                except Exception:
+                    # Fail-safe: if live mode fails (missing dependency/key issue), continue in demo mode.
+                    demo_mode_active = True
+                    st.warning("Live analysis is unavailable right now. Running in demo mode instead.")
             demo_agent1 = demo_agent2 = demo_agent3 = demo_agent4 = None
             if demo_mode_active:
                 demo_agent1, demo_agent2, demo_agent3, demo_agent4 = build_demo_outputs(selected_case, guideline)
