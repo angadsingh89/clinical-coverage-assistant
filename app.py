@@ -634,9 +634,10 @@ with tab1:
             """
             <div class="note-box">
                 <h4>How This Tool Helps</h4>
-                <p><b>Purpose:</b> This tool helps you check whether a coverage request is well-supported before submission.</p>
-                <p><b>What happens:</b> It reads the note, compares it with coverage rules, then shows a coverage recommendation and next steps.</p>
-                <p><b>How to use:</b> Pick a case, review the guideline, and click <b>Step 3: Run Analysis</b>.</p>
+                <p><b>What “coverage” means:</b> Coverage means whether an insurance plan is likely to approve payment for a requested test, procedure, or treatment.</p>
+                <p><b>What this tool checks:</b> It reads the clinical note and compares documented evidence (symptoms, imaging, prior treatment, and functional impact) against policy criteria.</p>
+                <p><b>What you get:</b> A clear recommendation, the reason behind it, and the exact documentation gaps to fix before submission.</p>
+                <p><b>How to use:</b> Select a case, review the matched guideline, then click <b>Step 3: Run Analysis</b>.</p>
             </div>
             """,
             unsafe_allow_html=True
@@ -645,8 +646,8 @@ with tab1:
         st.markdown(
             """
             <div class="mini-note">
-                <p><b>Quick Start:</b> Pick a case, confirm the guideline, and click <b>Step 3: Run Analysis</b>.</p>
-                <p><b>You will get:</b> Criteria check, coverage recommendation, confidence score, and simple next actions.</p>
+                <p><b>Quick Start:</b> Choose a case, confirm the guideline, and run analysis.</p>
+                <p><b>Output includes:</b> Criteria status, recommendation confidence, and practical next steps.</p>
             </div>
             """,
             unsafe_allow_html=True
